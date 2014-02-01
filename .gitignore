@@ -3,4 +3,4 @@
 /as/bin
 /as/build
 /java/libs/G2SInAppSDK
-/platform/Android-ARM/InAppPurchase.jar
+*.jar
