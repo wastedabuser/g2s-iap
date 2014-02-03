@@ -26,6 +26,18 @@ public class InAppExtensionContext extends FREContext {
 		return functions;
 	}
 	
+	public void paymentDeclined(String productId) {
+		dispatchStatusEventAsync(productId, "payment_declined");
+	}
+
+	public void paymentCanceled(String productId) {
+		dispatchStatusEventAsync(productId, "payment_canceled");
+	}
+
+	public void paymentAccepted(String productId, String authCode) {
+		dispatchStatusEventAsync(productId + ";" + authCode, "payment_accepted");
+	}
+	
 	public void sendException(Exception e) {
 		sendException(e, "");
 	}

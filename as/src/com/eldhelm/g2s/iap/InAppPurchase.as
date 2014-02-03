@@ -9,8 +9,6 @@ package com.eldhelm.g2s.iap {
 	public class InAppPurchase extends EventDispatcher {
 		
 		public var created:Boolean;
-		public var ready:Boolean;
-		public var inited:Boolean;
 		
 		private var extContext:ExtensionContext;
 		private var _callbackMethod:String;
@@ -30,24 +28,22 @@ package com.eldhelm.g2s.iap {
 			}
 		}
 		
-		private function onStatus(event:StatusEvent):void {
-			var errorObj:Object;
-			
-			if (event.level == "result") {
-				trace("IAP Extension: result " + event.code);
-				var data:*;
-				if (event.code == "payment_completed") {
-					trace("IAP: execute getPurchaseResult");
-					data = extContext.call("getPurchaseResult");
-					trace("IAP Extension: returned " + data);
-				}
-				dispatchEvent(new IapEvent("iapEvent_" + event.code, data));
+		private function onStatus(event:StatusEvent):void {		
+			if (event.level == "payment_declined" || event.level == "payment_canceled") {
+				trace("IAP Extension: " + event.level);
+				dispatchEvent(new IapEvent("iapEvent_" + event.level, { productId: event.code } ));
+				return;
+				
+			} else if (event.level == "payment_accepted") {
+				trace("IAP Extension: payment accepted: " + event.code);
+				var params:Array = event.code.split(";");
+				dispatchEvent(new IapEvent(IapEvent.ON_ACCEPTED, { productId: params[0], authCode: params[1] } ));
 				return;
 				
 			} else if (event.level == "exception") {
 				trace("================ " + event.code + " ===================");
 				trace(extContext.actionScriptData);
-				errorObj = { code: event.code, data: extContext.actionScriptData };
+				dispatchEvent(new IapEvent(IapEvent.ON_EXCEPTION, { code: event.code, data: extContext.actionScriptData } ));
 				
 			} else if (event.level == "warning") {
 				trace("IAP Extension: " + event.code);
@@ -56,15 +52,12 @@ package com.eldhelm.g2s.iap {
 			} else if (event.level == "error") {
 				trace("================ Extension error ===================");
 				trace("IAP Extension: " + event.code);
-				errorObj = { code: event.code };
+				dispatchEvent(new IapEvent(IapEvent.ON_ERROR, { code: event.code }));
 			}
-			
-			dispatchEvent(new IapEvent("iapEvent_" + event.level, errorObj));
 		}
 		
 		/**
 		 * Initilizes the extenison. This method is called automtically when the object is created.
-		 * You could call it once again again if an exeption arises, like when the g2s IAP plugin is not installed.
 		 */
 		public function initialize():void {
 			if (!extContext) return;
@@ -75,14 +68,13 @@ package com.eldhelm.g2s.iap {
 		
 		/**
 		 * Initiate a purchase of an item
-		 * @param	itemGroupId
-		 * @param	itemId
+		 * @param	productId
 		 */
-		public function purchase(productId:String):void {
+		public function purchase(productId:String, languageCode:String = "en"):void {
 			if (!extContext) return;
 			
 			trace("IAP: execute purchase");
-			extContext.call("purchase", productId);
+			extContext.call("purchase", productId, languageCode);
 		}
 		
 		/**

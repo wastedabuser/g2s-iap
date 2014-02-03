@@ -6,6 +6,7 @@ import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 import com.eldhelm.g2s.iap.InAppExtensionContext;
 import com.eldhelm.g2s.iap.InAppPaymentActivity;
+import com.in.app.utilities.PreloadSingelton;
 import com.safecharge.android.PayNowActivity;
 
 public class PurchaseFunction implements FREFunction {
@@ -14,23 +15,24 @@ public class PurchaseFunction implements FREFunction {
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		InAppExtensionContext frecontext = (InAppExtensionContext) arg0;
 
-		String _productId = null;
-		String _packageName = null;
+		String productId = null;
+		String langCode = null;
 
 		try {
-			_productId = arg1[0].getAsString();
-			_packageName = frecontext.getActivity().getPackageName();
+			productId = arg1[0].getAsString();
+			langCode = arg1[1].getAsString();
 		} catch (Exception e) {
 			frecontext.sendException(e);
 		}
 
-		frecontext.sendWarning("Calling purchase:" + _packageName + ";"
-				+ _productId + ";");
+		frecontext.sendWarning("Calling purchase:" + productId + ";" + langCode + ";");
 
 		try {
 			
+			// PreloadSingelton.getInstance().preloadInit(frecontext.getActivity().getApplicationContext(), "Hebrew", productId, "");
+			
 			Intent intent = new Intent(frecontext.getActivity().getApplicationContext(), InAppPaymentActivity.class);
-			intent.putExtra(PayNowActivity.IN_CHARGE_PRODUCT_ID, _productId);
+			intent.putExtra(PayNowActivity.IN_CHARGE_PRODUCT_ID, productId);
 			frecontext.getActivity().startActivity(intent);
 			
 		} catch (Exception e) {
