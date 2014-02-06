@@ -6,7 +6,6 @@ import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 import com.eldhelm.g2s.iap.InAppExtensionContext;
 import com.eldhelm.g2s.iap.InAppPaymentActivity;
-import com.in.app.utilities.PreloadSingelton;
 import com.safecharge.android.PayNowActivity;
 
 public class PurchaseFunction implements FREFunction {

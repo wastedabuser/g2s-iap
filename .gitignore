@@ -2,6 +2,6 @@
 /as/ane
 /as/bin
 /as/build
-/java/libs/G2SInAppSDK
+/java/G2SInAppSDK
 *.jar
 *.apk

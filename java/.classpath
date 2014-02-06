@@ -6,6 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/FlashDevelop/Tools/flexsdk/lib/android/FlashRuntimeExtensions.jar"/>
-	<classpathentry kind="lib" path="libs/G2SInAppSDK"/>
+	<classpathentry kind="lib" path="G2SInAppSDK"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
