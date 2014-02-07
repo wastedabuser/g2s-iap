@@ -1,6 +1,8 @@
 use strict;
 
-my ($projectPath, $name, $flexSdkPath) = @ARGV;
+my ($projectPath, $name, $sdkPath) = @ARGV;
+
+my $flexSdkPath = "C:/Program Files (x86)/FlashDevelop/Tools/flexsdk";
 
 my $swc = "$projectPath\\..\\build\\$name.swc";
 my $ane = "$projectPath\\..\\build\\com.eldhelm.g2s.iap.InAppPurchase.ane";
@@ -26,7 +28,7 @@ my @commands = (
 		-source-path src
 		-namespace com.eldhelm.g2s.iap extensionManifest.xml
 		-include-namespaces com.eldhelm.g2s.iap
-		-swf-version=20
+		-swf-version=23
 		-output $swc
 	~,
 
@@ -38,11 +40,11 @@ my @commands = (
 		-y
 	~, @platfroms),
 
-	qq~"$flexSdkPath/bin/adt" 
+	qq~"$sdkPath/bin/adt" 
 		-package
 		-target ane $ane extension.xml 
 		-swc $swc
-	~.join(" ", map qq~-platform $_ -C ../platform/$_ .~, @platfroms),
+	~.join(" ", map qq~-platform $_ ~.($_ =~ /Android/ ? "-platformoptions platform.xml ":"").qq~-C ../platform/$_ .~, @platfroms),
 
 	-d $productionPath ? (
 		qq~copy "$swc" "$productionPath/lib" /y~,

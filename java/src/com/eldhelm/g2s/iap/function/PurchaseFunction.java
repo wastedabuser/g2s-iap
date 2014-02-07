@@ -1,6 +1,7 @@
 package com.eldhelm.g2s.iap.function;
 
 import android.content.Intent;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
@@ -25,7 +26,7 @@ public class PurchaseFunction implements FREFunction {
 		}
 
 		frecontext.sendWarning("Calling purchase:" + productId + ";" + langCode + ";");
-
+		
 		try {
 			
 			// PreloadSingelton.getInstance().preloadInit(frecontext.getActivity().getApplicationContext(), "Hebrew", productId, "");
