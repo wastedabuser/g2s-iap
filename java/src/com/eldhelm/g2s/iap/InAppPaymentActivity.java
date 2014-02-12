@@ -16,16 +16,7 @@ public class InAppPaymentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		Intent intent = new Intent(getApplicationContext(), PayNowActivity.class);
-		
-		intent.putExtras(getIntent().getExtras());
-		// intent.putExtra(PayNowActivity.IN_THEME_LOGO_TOP, R.drawable.icon);       // A 
-		// intent.putExtra(PayNowActivity.IN_THEME_LIGHT_COLOR, 0xff0699df);     // B 
-		// intent.putExtra(PayNowActivity.IN_THEME_DARK_COLOR, 0xff00517d);      // C 
-		// intent.putExtra(PayNowActivity.IN_THEME_BACK_COLOR, 0xffdde2e3);      // D 
-		// intent.putExtra(PayNowActivity.IN_THEME_TEXT_COLOR, 0xff056598);      // E 
-		// intent.putExtra(PayNowActivity.IN_THEME_HIGHLIGHT_COLOR, 0xffae091a); // F 
-		// intent.putExtra(PayNowActivity.IN_THEME_LOGO_BOTTOM, R.drawable.icon2); //G
-		
+		intent.putExtras(getIntent().getExtras());		
 		startActivityForResult(intent, PayNowActivity.REQUEST_CODE);
     }
 	

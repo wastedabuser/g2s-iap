@@ -10,12 +10,7 @@ package com.eldhelm.g2s.iap;
 public final class R {
     public static final class attr {
     }
-    public static final class raw {
-        public static int cancel=0x7f020000;
-        public static int cancel_pushed=0x7f020001;
-        public static int default_icon=0x7f020002;
-        public static int g2s_icon=0x7f020003;
-        public static int g2s_success_icon=0x7f020004;
-        public static int lock=0x7f020005;
+    public static final class drawable {
+        public static int product_icon=0x7f020000;
     }
 }

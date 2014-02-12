@@ -13,15 +13,38 @@ package com.eldhelm.g2s.iap {
 		private var extContext:ExtensionContext;
 		private var _callbackMethod:String;
 		private var _callbackArgs:Array;
-		private var defaultMode:int;
 		
-		public function InAppPurchase(mode:int = 0) {
-			defaultMode = mode;
+		private var b:int = 0xff0699df;
+		private var c:int = 0xff00517d;
+		private var d:int = 0xffdde2e3;
+		private var e:int = 0xff056598;
+		private var f:int = 0xffae091a;
+		
+		/**
+		 * The constructor accepts an optional configuration object for example:
+		 * {
+		 *  LIGHT_COLOR: 0xffedcd8c,
+		 *	DARK_COLOR: 0xff756037,
+		 *	BACK_COLOR: 0xfff1e6cc,
+		 *	TEXT_COLOR: 0xff010101,
+		 *	HIGHLIGHT_COLOR: 0xffedcd8c
+		 * }
+		 * Please rffer to the g2s developer manual for explanation what these properties mean
+		 * @param	config
+		 */
+		public function InAppPurchase(config:Object = null) {
+			if (config != null) {
+				if (config.LIGHT_COLOR is uint) b = config.LIGHT_COLOR;
+				if (config.DARK_COLOR is uint) c = config.DARK_COLOR;
+				if (config.BACK_COLOR is uint) d = config.BACK_COLOR;
+				if (config.TEXT_COLOR is uint) e = config.TEXT_COLOR;
+				if (config.HIGHLIGHT_COLOR is uint) f = config.HIGHLIGHT_COLOR;
+			}
 			extContext = ExtensionContext.createExtensionContext("com.eldhelm.g2s.iap.InAppPurchase", "");
 			if (extContext != null) {
 				trace("IAP: context created");
 				initialize();
-				extContext.addEventListener(StatusEvent.STATUS, onStatus);				
+				extContext.addEventListener(StatusEvent.STATUS, onStatus);
 				created = true;
 			} else {
 				trace("IAP: context creation failed");
@@ -63,18 +86,18 @@ package com.eldhelm.g2s.iap {
 			if (!extContext) return;
 			
 			trace("IAP: execute initialize");
-			extContext.call("initializeExtension");
+			extContext.call("initializeExtension", b, c, d, e, f);
 		}
 		
 		/**
 		 * Initiate a purchase of an item
 		 * @param	productId
 		 */
-		public function purchase(productId:String, languageCode:String = "en"):void {
+		public function purchase(productId:String):void {
 			if (!extContext) return;
 			
 			trace("IAP: execute purchase");
-			extContext.call("purchase", productId, languageCode);
+			extContext.call("purchase", productId);
 		}
 		
 		/**

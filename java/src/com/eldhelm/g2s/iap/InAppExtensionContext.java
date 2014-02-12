@@ -13,6 +13,12 @@ import com.eldhelm.g2s.iap.function.PurchaseFunction;
 
 public class InAppExtensionContext extends FREContext {
 
+	public int b;
+	public int c;
+	public int d;
+	public int e;
+	public int f;
+	
 	@Override
 	public void dispose() {
 		

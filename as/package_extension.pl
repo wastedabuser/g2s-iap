@@ -44,7 +44,7 @@ my @commands = (
 		-package
 		-target ane $ane extension.xml 
 		-swc $swc
-	~.join(" ", map qq~-platform $_ ~.($_ =~ /Android/ ? "-platformoptions platform.xml ":"").qq~-C ../platform/$_ .~, @platfroms),
+	~.join(" ", map qq~-platform $_ ~.(-d "../platform/$_/res" ? "-platformoptions platform$_.xml ":"").qq~-C ../platform/$_ .~, @platfroms),
 
 	-d $productionPath ? (
 		qq~copy "$swc" "$productionPath/lib" /y~,
